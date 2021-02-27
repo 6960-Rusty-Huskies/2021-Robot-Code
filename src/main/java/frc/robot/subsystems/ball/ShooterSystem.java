@@ -52,7 +52,7 @@ public class ShooterSystem extends SubsystemBase {
 
   public boolean ready() {
     double currentVelocity = encoder.getVelocity();
-    return (currentVelocity >= (velocity - 50));
+    return (currentVelocity >= velocity) && (currentVelocity < velocity + 25);
   }
 
   @Override
