@@ -45,27 +45,27 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     Command intakeCommand = new Intake(ballSystem);
-    JoystickButton startIntake = new JoystickButton(leftDriverController, 1);
+    JoystickButton startIntake = new JoystickButton(leftDriverController, 3);
     startIntake.whenPressed(intakeCommand);
-    JoystickButton cancelIntake = new JoystickButton(leftDriverController, 5);
+    JoystickButton cancelIntake = new JoystickButton(leftDriverController, 2);
     cancelIntake.cancelWhenPressed(intakeCommand);
 
     Command intakeOneBallCommand = new IntakeOneBall(ballSystem);
-    JoystickButton startIntakeOneBall = new JoystickButton(leftDriverController, 2);
+    JoystickButton startIntakeOneBall = new JoystickButton(leftDriverController, 4);
     startIntakeOneBall.whenPressed(intakeOneBallCommand);
-    JoystickButton cancelIntakeOneBall = new JoystickButton(leftDriverController, 4);
+    JoystickButton cancelIntakeOneBall = new JoystickButton(leftDriverController, 5);
     cancelIntakeOneBall.cancelWhenPressed(intakeOneBallCommand);
 
     Command shootAllCommand = new Shoot(ballSystem);
-    JoystickButton shootAll = new JoystickButton(rightDriverController, 1);
+    JoystickButton shootAll = new JoystickButton(rightDriverController, 3);
     shootAll.whenPressed(shootAllCommand);
-    JoystickButton cancelShootAll = new JoystickButton(rightDriverController, 5);
+    JoystickButton cancelShootAll = new JoystickButton(rightDriverController, 2);
     cancelShootAll.cancelWhenPressed(shootAllCommand);
 
     Command shootOneBallCommand = new ShootOneBall(ballSystem);
-    JoystickButton startShootOneBall = new JoystickButton(rightDriverController, 2);
+    JoystickButton startShootOneBall = new JoystickButton(rightDriverController, 4);
     startShootOneBall.whenPressed(shootOneBallCommand);
-    JoystickButton cancelShootOneBall = new JoystickButton(rightDriverController, 4);
+    JoystickButton cancelShootOneBall = new JoystickButton(rightDriverController, 5);
     cancelShootOneBall.cancelWhenPressed(shootOneBallCommand);
 
   }

@@ -7,10 +7,15 @@ import static frc.robot.Constants.*;
 
 public class IntakeOneBall extends Intake {
 
-  private final int beginningBallCount;
+  private int beginningBallCount;
 
   public IntakeOneBall(BallSystem ballSystem) {
     super(ballSystem);
+  }
+
+  @Override
+  public void initialize() {
+    super.initialize();
     beginningBallCount = ballSystem.getBallCount();
   }
 

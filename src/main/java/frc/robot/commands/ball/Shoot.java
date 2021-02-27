@@ -26,8 +26,10 @@ public class Shoot extends CommandBase {
     ballSystem.runShooter();
     if (ballSystem.shooterIsReady()) {
       ballSystem.setUpperIndexer(.5);
+      ballSystem.setLowerIndexer(.5);
     } else {
       ballSystem.setUpperIndexer(0);
+      ballSystem.setLowerIndexer(0);
     }
   }
 
@@ -35,6 +37,7 @@ public class Shoot extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     ballSystem.setUpperIndexer(0);
+    ballSystem.setLowerIndexer(0);
     ballSystem.stopShooter();
   }
 

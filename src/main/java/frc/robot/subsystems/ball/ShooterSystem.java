@@ -25,6 +25,7 @@ public class ShooterSystem extends SubsystemBase {
     controller.setP(SHOOTER_P);
     controller.setFF(SHOOTER_FF);
     shooter.setInverted(true);
+    SmartDashboard.putNumber("Shooter RPM Set Value", 3650);
   }
 
   // Velocity in RPM
@@ -53,7 +54,7 @@ public class ShooterSystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Velocity", (int) encoder.getVelocity());
-    int setVelocity = (int) SmartDashboard.getNumber("Shooter RPM Set Value", 3650);
+    int setVelocity = (int) SmartDashboard.getNumber("Shooter RPM Set Value", 2000);
     if (setVelocity != velocity) {
       velocity = setVelocity;
     }

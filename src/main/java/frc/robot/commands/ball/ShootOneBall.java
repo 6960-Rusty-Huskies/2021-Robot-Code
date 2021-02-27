@@ -5,10 +5,15 @@ import frc.robot.subsystems.ball.*;
 
 public class ShootOneBall extends Shoot {
 
-  private final int beginningBallCount;
+  private int beginningBallCount;
 
   public ShootOneBall(BallSystem ballSystem) {
     super(ballSystem);
+  }
+
+  @Override
+  public void initialize() {
+    super.initialize();
     beginningBallCount = ballSystem.getBallCount();
   }
 
