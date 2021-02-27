@@ -77,20 +77,26 @@ public class BallSystem extends SubsystemBase {
     return shooterSystem.ready();
   }
 
+  public void setShooterFF(double ff) {
+    shooterSystem.setShooterFF(ff);
+  }
+
   @Override
   public void periodic() {
-    if (lastLowerBeamBreakStatus && !lowerBeamBreak.triggered()) {
+    boolean lowerBeamBreakTriggered = lowerBeamBreak.triggered();
+    if (lastLowerBeamBreakStatus && !lowerBeamBreakTriggered) {
       ballCount++;
     }
-    if (lastUpperBeamBreakStatus && !upperBeamBreak.triggered()) {
+    boolean upperBeamBreakTriggered = upperBeamBreak.triggered();
+    if (lastUpperBeamBreakStatus && !upperBeamBreakTriggered) {
       ballCount--;
     }
-    lastLowerBeamBreakStatus = lowerBeamBreak.triggered();
-    lastUpperBeamBreakStatus = upperBeamBreak.triggered();
+    lastLowerBeamBreakStatus = lowerBeamBreakTriggered;
+    lastUpperBeamBreakStatus = upperBeamBreakTriggered;
 
     SmartDashboard.putNumber("Power Cell Count", ballCount);
-    SmartDashboard.putBoolean("Lower BeamBreak", lowerBeamBreak.triggered());
-    SmartDashboard.putBoolean("Upper BeamBreak", upperBeamBreak.triggered());
+    SmartDashboard.putBoolean("Lower BeamBreak", lastLowerBeamBreakStatus);
+    SmartDashboard.putBoolean("Upper BeamBreak", lastUpperBeamBreakStatus);
   }
 
 }
