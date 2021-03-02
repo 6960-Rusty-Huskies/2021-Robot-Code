@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.commands.auto.*;
@@ -38,6 +39,8 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
+
+        SmartDashboard.putNumber("PDrive Value", Constants.DriveConstants.kPDriveVel);
     }
 
     /**

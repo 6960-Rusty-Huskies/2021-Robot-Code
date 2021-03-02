@@ -2,6 +2,7 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.controller.*;
 import edu.wpi.first.wpilibj.geometry.*;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.trajectory.*;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants;
@@ -38,8 +39,8 @@ public class MoveForward extends RamseteCommand {
                         Constants.DriveConstants.kaVoltSecondsSquaredPerMeter),
                 Constants.DriveConstants.driveKinematics,
                 driveSystem::getWheelSpeeds,
-                new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0),
-                new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0),
+                new PIDController(SmartDashboard.getNumber("PDrive Value", .5), 0, 0),
+                new PIDController(SmartDashboard.getNumber("PDrive Value", .5), 0, 0),
                 driveSystem::tankDriveVolts,
                 driveSystem);
     }
