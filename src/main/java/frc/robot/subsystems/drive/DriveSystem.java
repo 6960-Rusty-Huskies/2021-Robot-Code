@@ -31,10 +31,12 @@ public class DriveSystem extends SubsystemBase {
         final WPI_TalonSRX leftFront = new WPI_TalonSRX(Constants.CAN.DRIVE_LEFT_FRONT_MOTOR);
         final WPI_TalonSRX leftBack = new WPI_TalonSRX(Constants.CAN.DRIVE_LEFT_BACK_MOTOR);
         leftMotors = new SpeedControllerGroup(leftFront, leftBack);
+        //leftMotors.setInverted(true);
 
         final WPI_TalonSRX rightFront = new WPI_TalonSRX(Constants.CAN.DRIVE_RIGHT_FRONT_MOTOR);
         final WPI_TalonSRX rightBack = new WPI_TalonSRX(Constants.CAN.DRIVE_RIGHT_BACK_MOTOR);
         rightMotors = new SpeedControllerGroup(rightFront, rightBack);
+        //rightMotors.setInverted(true);
 
         leftEncoder = new Encoder(Digital.DRIVE_LEFT_ENCODER_A, Digital.DRIVE_LEFT_ENCODER_B);
         rightEncoder = new Encoder(Digital.DRIVE_RIGHT_ENCODER_A, Digital.DRIVE_RIGHT_ENCODER_B);
@@ -45,13 +47,13 @@ public class DriveSystem extends SubsystemBase {
         drive = new DifferentialDrive(leftMotors, rightMotors);
         drive.setDeadband(.05);
 
-        gyro = new PigeonIMU(leftFront);
+        gyro = new PigeonIMU(rightFront);
 
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     }
 
     public void arcadeDrive(double speed, double turn) {
-        drive.arcadeDrive(-speed, turn);
+        drive.arcadeDrive(speed, turn);
     }
 
     public void tankDrive(double leftSide, double rightSide) {
@@ -114,8 +116,8 @@ public class DriveSystem extends SubsystemBase {
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         // DifferentialDrive auto sets right side to inverted... hence, right side is inverted.
         // Invert left side instead if we have inverted motors for drive
-        leftMotors.setVoltage(leftVolts);
-        rightMotors.setVoltage(-rightVolts);
+        leftMotors.setVoltage(-leftVolts);
+        rightMotors.setVoltage(rightVolts);
         drive.feed();
     }
 
