@@ -13,5 +13,6 @@ public class AutoRun extends SequentialCommandGroup {
                 new MoveForward(driveSystem)
         );
         ballSystem.setBallCount(3);
+        addCommands(new Shoot(ballSystem), driveForwardAndIntake, new MoveBackward(driveSystem));
     }
 }

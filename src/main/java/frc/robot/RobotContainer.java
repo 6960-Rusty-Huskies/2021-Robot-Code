@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.*;
+import frc.robot.commands.auto.*;
 import frc.robot.commands.ball.*;
 import frc.robot.commands.drive.*;
 import frc.robot.subsystems.ball.*;
@@ -69,6 +70,12 @@ public class RobotContainer {
         startShootOneBall.whenPressed(shootOneBallCommand);
         JoystickButton cancelShootOneBall = new JoystickButton(rightDriverController, 5);
         cancelShootOneBall.cancelWhenPressed(shootOneBallCommand);
+
+        Command auto = new AutoRun(driveSystem, ballSystem);
+        JoystickButton autoStart = new JoystickButton(leftDriverController, 11);
+        autoStart.whenPressed(auto);
+        JoystickButton autoStop = new JoystickButton(leftDriverController, 10);
+        autoStop.cancelWhenPressed(auto);
 
     }
 
