@@ -41,6 +41,10 @@ public class BallSystem extends SubsystemBase {
         return ballCount;
     }
 
+    public void setBallCount(int ballCount) {
+        this.ballCount = ballCount;
+    }
+
     public boolean upperBeamTriggered() {
         return lastUpperBeamBreakStatus;
     }

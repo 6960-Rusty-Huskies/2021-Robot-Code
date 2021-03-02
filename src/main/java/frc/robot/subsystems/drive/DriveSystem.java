@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.*;
 
 import static frc.robot.Constants.*;
+import static frc.robot.Constants.DriveConstants.leftEncoderReversed;
+import static frc.robot.Constants.DriveConstants.rightEncoderReversed;
 
 
 public class DriveSystem extends SubsystemBase {
@@ -38,9 +40,10 @@ public class DriveSystem extends SubsystemBase {
         rightMotors = new SpeedControllerGroup(rightFront, rightBack);
         //rightMotors.setInverted(true);
 
-        leftEncoder = new Encoder(Digital.DRIVE_LEFT_ENCODER_A, Digital.DRIVE_LEFT_ENCODER_B);
-        rightEncoder = new Encoder(Digital.DRIVE_RIGHT_ENCODER_A, Digital.DRIVE_RIGHT_ENCODER_B);
+        leftEncoder = new Encoder(Digital.DRIVE_LEFT_ENCODER_A, Digital.DRIVE_LEFT_ENCODER_B, leftEncoderReversed);
+        rightEncoder = new Encoder(Digital.DRIVE_RIGHT_ENCODER_A, Digital.DRIVE_RIGHT_ENCODER_B, rightEncoderReversed);
         leftEncoder.setDistancePerPulse(Constants.DriveConstants.encoderDistancePerPulse);
+        leftEncoder.setReverseDirection(true);
         rightEncoder.setDistancePerPulse(Constants.DriveConstants.encoderDistancePerPulse);
         resetEncoders();
 
