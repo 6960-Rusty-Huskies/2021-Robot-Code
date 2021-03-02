@@ -136,9 +136,9 @@ public final class Constants {
         public static final double kaVoltSecondsSquaredPerMeter = 0.261;
 
         // Example value only - as above, this must be tuned for your drive!
-        public static final double kPDriveVel = 9.93;
+        public static final double kPDriveVel = .5;
 
-        public static final double trackwidthMeters = 0.52;
+        public static final double trackwidthMeters = 0.63;
         public static final DifferentialDriveKinematics driveKinematics =
                 new DifferentialDriveKinematics(trackwidthMeters);
 
