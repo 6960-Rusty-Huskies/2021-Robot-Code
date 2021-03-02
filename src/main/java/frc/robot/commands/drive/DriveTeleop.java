@@ -7,40 +7,40 @@ import frc.robot.subsystems.drive.*;
 
 public class DriveTeleop extends CommandBase {
 
-  private final DriveSystem driveSystem;
-  private final Joystick leftDriverController;
-  private final Joystick rightDriverController;
+    private final DriveSystem driveSystem;
+    private final Joystick leftDriverController;
+    private final Joystick rightDriverController;
 
-  /**
-   * Creates a new ArcadeDrive.
-   */
-  public DriveTeleop(DriveSystem driveSystem, Joystick leftDriverController, Joystick rightDriverController) {
-    addRequirements(driveSystem);
+    /**
+     * Creates a new ArcadeDrive.
+     */
+    public DriveTeleop(DriveSystem driveSystem, Joystick leftDriverController, Joystick rightDriverController) {
+        addRequirements(driveSystem);
 
-    this.driveSystem = driveSystem;
-    this.leftDriverController = leftDriverController;
-    this.rightDriverController = rightDriverController;
-  }
+        this.driveSystem = driveSystem;
+        this.leftDriverController = leftDriverController;
+        this.rightDriverController = rightDriverController;
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    driveSystem.arcadeDrive(rightDriverController.getY(), leftDriverController.getX());
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        driveSystem.arcadeDrive(rightDriverController.getY(), leftDriverController.getX());
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

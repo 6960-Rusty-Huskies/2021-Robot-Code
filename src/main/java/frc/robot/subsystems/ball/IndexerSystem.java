@@ -9,20 +9,20 @@ import edu.wpi.first.wpilibj2.command.*;
  */
 public class IndexerSystem extends SubsystemBase {
 
-  private final CANSparkMax motor;
+    private final CANSparkMax motor;
 
-  public IndexerSystem(int motorId, boolean inverted) {
-    motor = new CANSparkMax(motorId, MotorType.kBrushless);
-    motor.setInverted(inverted);
-  }
+    public IndexerSystem(int motorId, boolean inverted) {
+        motor = new CANSparkMax(motorId, MotorType.kBrushless);
+        motor.setInverted(inverted);
+    }
 
-  public void drive(double speed) {
-    motor.set(speed);
-  }
+    public void drive(double speed) {
+        motor.set(speed);
+    }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 
 }

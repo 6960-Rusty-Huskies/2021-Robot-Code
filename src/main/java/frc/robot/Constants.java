@@ -1,8 +1,9 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.controller.*;
+import edu.wpi.first.wpilibj.kinematics.*;
+import edu.wpi.first.wpilibj.trajectory.constraint.*;
 
-import java.util.*;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -49,13 +50,8 @@ public final class Constants {
         public static final int DRIVE_RIGHT_ENCODER_A = 4;
         public static final int DRIVE_RIGHT_ENCODER_B = 5;
 
-        public static final int INTAKE_ENCODER_A = 0;
-        public static final int INTAKE_ENCODER_B = 1;
-
         // LIMIT SWITCHES
         public static final int INTAKE_ARM_LIMIT_SWITCH = 6;
-        public static final int LIFT_SWITCH_TOP = 10;
-        public static final int LIFT_SWITCH_BOTTOM = 11;
     }
 
     /**
@@ -92,20 +88,8 @@ public final class Constants {
      */
     public static final class Button {
         // Button values start at 1.
-
         public static final int SHOOT_FAR = 7;
         public static final int SHOOT_NEAR = 8;
-
-        public static final int ROTATION_CONTROL = 9;
-        public static final int POSITION_CONTROL = 10;
-
-        public static final int INDEX_UP = 1;
-        public static final int INDEX_DOWN = 5;
-        public static final int INDEX_AUTO_TOGGLE = 2;
-
-        public static final AbstractMap.SimpleEntry<GenericHID.Hand, Integer>
-                DRIVE_HALF_SPEED = new AbstractMap.SimpleEntry<GenericHID.Hand, Integer>(GenericHID.Hand.kLeft, 2),
-                RAISE_WINCH = new AbstractMap.SimpleEntry<GenericHID.Hand, Integer>(GenericHID.Hand.kRight, 3);
     }
 
     /**
@@ -115,25 +99,12 @@ public final class Constants {
         public static final double SHOOTER_RPM_NEAR = 2000;
         public static final double SHOOTER_RPM_FAR = 3650;
         public static final double SHOOTER_RPM_AUTO = 2200;
-
-        public static final double LL_AREA_FAR = 0.1;
-
-        public static final double INDEX_SPEED = 1./3.;
-        public static final double INDEX_GEAR_RATIO = 10;
-
-        public static final double INTAKE_LOW_ANGLE = 120;
-        public static final double INTAKE_HIGH_ANGLE = 0;
-        public static final double INTAKE_GEAR_RATIO = 16. / 18.;
-
-        public static final double LIFT_SPEED_UP = 0.5;
-        public static final double LIFT_SPEED_DOWN = 0.1;
     }
 
     /**
      * Contains PID and feedforward values for subsystems that use a PID controller.
      */
     public static final class PID {
-
         public static final double SHOOTER_P = 0.00035;
         public static final double SHOOTER_FF = 0.00025;
 
@@ -142,13 +113,49 @@ public final class Constants {
 
         public static final double DRIVE_BASE_P = 0.01;
         public static final double DRIVE_BASE_D = 0;
+    }
 
-        public static final double INTAKE_S = 4.52;
-        public static final double INTAKE_V = 0.00606;
-        public static final double INTAKE_COS = 0.437;
-        public static final double INTAKE_A = 9.58E-5;
-        public static final double INTAKE_P = 0.000721;
-        public static final double INTAKE_D = 0.000339;
+    public static final class DriveConstants {
+        public static final boolean leftEncoderReversed = true;
+        public static final boolean rightEncoderReversed = false;
+
+        public static final int encoderCPR = 2048;
+        public static final double wheelDiameterMeters = 0.152;
+        public static final double encoderDistancePerPulse =
+                // Assumes the encoders are directly mounted on the wheel shafts
+                (wheelDiameterMeters * Math.PI) / (double) encoderCPR;
+
+        public static final boolean kGyroReversed = false;
+
+        // These characterization values MUST be determined either experimentally or theoretically
+        // for *your* robot's drive.
+        // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
+        // values for your robot.
+        public static final double ksVolts = 0.878;
+        public static final double kvVoltSecondsPerMeter = 3.16;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.261;
+
+        // Example value only - as above, this must be tuned for your drive!
+        public static final double kPDriveVel = 9.93;
+
+        public static final double trackwidthMeters = 0.52;
+        public static final DifferentialDriveKinematics driveKinematics =
+                new DifferentialDriveKinematics(trackwidthMeters);
+
+        public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
+                new DifferentialDriveVoltageConstraint(
+                        new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
+                        driveKinematics,
+                        10);
+    }
+
+    public static final class AutoConstants {
+        public static final double kMaxSpeedMetersPerSecond = .6;
+        public static final double kMaxAccelerationMetersPerSecondSquared = .6;
+
+        // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
     }
 
 }

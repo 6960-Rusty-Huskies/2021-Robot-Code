@@ -7,22 +7,22 @@ import static frc.robot.Constants.*;
 
 public class IntakeOneBall extends Intake {
 
-  private int beginningBallCount;
+    private int beginningBallCount;
 
-  public IntakeOneBall(BallSystem ballSystem) {
-    super(ballSystem);
-  }
+    public IntakeOneBall(BallSystem ballSystem) {
+        super(ballSystem);
+    }
 
-  @Override
-  public void initialize() {
-    super.initialize();
-    beginningBallCount = ballSystem.getBallCount();
-  }
+    @Override
+    public void initialize() {
+        super.initialize();
+        beginningBallCount = ballSystem.getBallCount();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return ballSystem.getBallCount() >= MAX_BALL_COUNT || ballSystem.getBallCount() > beginningBallCount;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return ballSystem.getBallCount() >= MAX_BALL_COUNT || ballSystem.getBallCount() > beginningBallCount;
+    }
 
 }
