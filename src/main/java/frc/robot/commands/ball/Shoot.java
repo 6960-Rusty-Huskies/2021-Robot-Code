@@ -10,19 +10,33 @@ import static frc.robot.Constants.PID.SHOOTER_FF;
 public class Shoot extends CommandBase {
 
     protected final BallSystem ballSystem;
+    protected double distance = 0;
 
-    public Shoot(BallSystem ballSystem) {
+    public Shoot(BallSystem ballSystem, double distance) {
         addRequirements(ballSystem);
+        this.distance = distance;
 
         this.ballSystem = ballSystem;
+    }
+
+    public Shoot(BallSystem ballSystem) {
+        this(ballSystem, 0);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         // set the intake arm going down, will auto switch off with limit switch
-        double ff = SmartDashboard.getNumber("Shooter FF Value", SHOOTER_FF);
-        ballSystem.setShooterFF(ff);
+        ShootingConfig shootingConfig = ballSystem.getShootingConfig(distance);
+        if (shootingConfig == null) {
+            double ff = SmartDashboard.getNumber("Shooter FF Value", SHOOTER_FF);
+            ballSystem.setShooterFF(ff);
+            int velocity = (int) SmartDashboard.getNumber("Shooter RPM Set Value", 2000);
+            ballSystem.setVelocity(velocity);
+        } else {
+            ballSystem.setShooterFF(shootingConfig.getFf());
+            ballSystem.setVelocity(shootingConfig.getSpeed());
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.

@@ -147,6 +147,12 @@ public final class Constants {
                         new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
                         driveKinematics,
                         10);
+
+        public static final double kTurnP = .001;
+        public static final double kTurnI = 0;
+        public static final double kTurnD = 0;
+        public static final double kTurnToleranceDeg = 5;
+        public static final double kTurnRateToleranceDegPerS = 10; // degrees per second
     }
 
     public static final class AutoConstants {

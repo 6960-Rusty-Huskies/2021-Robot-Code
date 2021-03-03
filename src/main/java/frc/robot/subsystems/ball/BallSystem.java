@@ -85,6 +85,14 @@ public class BallSystem extends SubsystemBase {
         shooterSystem.setShooterFF(ff);
     }
 
+    public void setVelocity(int velocity) {
+        shooterSystem.setVelocity(velocity);
+    }
+
+    public ShootingConfig getShootingConfig(double distance) {
+        return shooterSystem.getShootingConfig(distance);
+    }
+
     @Override
     public void periodic() {
         boolean lowerBeamBreakTriggered = lowerBeamBreak.triggered();

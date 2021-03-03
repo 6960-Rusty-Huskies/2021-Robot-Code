@@ -4,6 +4,8 @@ import com.revrobotics.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 
+import java.util.*;
+
 import static frc.robot.Constants.CAN.SHOOTER_MOTOR;
 import static frc.robot.Constants.PID.SHOOTER_FF;
 import static frc.robot.Constants.PID.SHOOTER_P;
@@ -15,6 +17,7 @@ public class ShooterSystem extends SubsystemBase {
     private final CANEncoder encoder;
     private final CANPIDController controller;
     private int velocity = 0;
+    private Map<Double, ShootingConfig> shooterValues = new HashMap<>();
 
     public ShooterSystem() {
         shooter = new CANSparkMax(SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -27,12 +30,13 @@ public class ShooterSystem extends SubsystemBase {
         SmartDashboard.putNumber("Shooter FF Value", SHOOTER_FF);
         shooter.setInverted(true);
         SmartDashboard.putNumber("Shooter RPM Set Value", 3650);
+        shooterValues.put(7.5D, new ShootingConfig(2800, .000207));
     }
 
     // Velocity in RPM
     public void setVelocity(int velocity) {
         this.velocity = velocity;
-        SmartDashboard.getNumber("Shooter RPM Set Value", velocity);
+        SmartDashboard.putNumber("Shooter RPM Set Value", velocity);
     }
 
     public void setShooterFF(double ff) {
@@ -43,6 +47,10 @@ public class ShooterSystem extends SubsystemBase {
     public void stopShooter() {
         velocity = 0;
         shooter.stopMotor();
+    }
+
+    public ShootingConfig getShootingConfig(double distance) {
+        return shooterValues.getOrDefault(distance, null);
     }
 
     // Called in periodic to keep the shooter at velocity
@@ -59,10 +67,6 @@ public class ShooterSystem extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         SmartDashboard.putNumber("Shooter Velocity", (int) encoder.getVelocity());
-        int setVelocity = (int) SmartDashboard.getNumber("Shooter RPM Set Value", 2000);
-        if (setVelocity != velocity) {
-            velocity = setVelocity;
-        }
     }
 
 }

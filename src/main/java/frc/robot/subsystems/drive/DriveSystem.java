@@ -43,7 +43,6 @@ public class DriveSystem extends SubsystemBase {
         leftEncoder = new Encoder(Digital.DRIVE_LEFT_ENCODER_A, Digital.DRIVE_LEFT_ENCODER_B, leftEncoderReversed);
         rightEncoder = new Encoder(Digital.DRIVE_RIGHT_ENCODER_A, Digital.DRIVE_RIGHT_ENCODER_B, rightEncoderReversed);
         leftEncoder.setDistancePerPulse(Constants.DriveConstants.encoderDistancePerPulse);
-        leftEncoder.setReverseDirection(true);
         rightEncoder.setDistancePerPulse(Constants.DriveConstants.encoderDistancePerPulse);
         resetEncoders();
 
@@ -110,6 +109,11 @@ public class DriveSystem extends SubsystemBase {
         odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     }
 
+    /** Zeroes the heading of the robot. */
+    public void zeroHeading() {
+        gyro.setFusedHeading(0);
+    }
+
     /**
      * Controls the left and right sides of the drive directly with voltages.
      *
@@ -122,6 +126,15 @@ public class DriveSystem extends SubsystemBase {
         leftMotors.setVoltage(-leftVolts);
         rightMotors.setVoltage(rightVolts);
         drive.feed();
+    }
+
+    /**
+     * Gets the average distance of the two encoders.
+     *
+     * @return the average of the two encoder readings
+     */
+    public double getAverageEncoderDistance() {
+        return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.0;
     }
 
     /**
