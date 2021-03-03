@@ -17,7 +17,7 @@ public class PIDForward extends PIDCommand {
                         Constants.DriveConstants.kTurnD),
                 drive::getHeading,
                 0,
-                output -> drive.arcadeDrive(-.5, output),
+                output -> drive.arcadeDrive(-.5, output * -1),
                 drive);
         this.drive = drive;
         drive.zeroHeading();
