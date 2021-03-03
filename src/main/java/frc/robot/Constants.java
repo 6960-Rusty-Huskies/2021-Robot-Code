@@ -44,11 +44,11 @@ public final class Constants {
      */
     public static final class Digital {
         // ENCODERS
-        public static final int DRIVE_LEFT_ENCODER_A = 2;
-        public static final int DRIVE_LEFT_ENCODER_B = 3;
+        public static final int DRIVE_LEFT_ENCODER_A = 4;
+        public static final int DRIVE_LEFT_ENCODER_B = 5;
 
-        public static final int DRIVE_RIGHT_ENCODER_A = 4;
-        public static final int DRIVE_RIGHT_ENCODER_B = 5;
+        public static final int DRIVE_RIGHT_ENCODER_A = 2;
+        public static final int DRIVE_RIGHT_ENCODER_B = 3;
 
         // LIMIT SWITCHES
         public static final int INTAKE_ARM_LIMIT_SWITCH = 6;
@@ -116,8 +116,8 @@ public final class Constants {
     }
 
     public static final class DriveConstants {
-        public static final boolean leftEncoderReversed = true;
-        public static final boolean rightEncoderReversed = false;
+        public static final boolean leftEncoderReversed = false;
+        public static final boolean rightEncoderReversed = true;
 
         public static final int encoderCPR = 2048;
         public static final double wheelDiameterMeters = 0.152;
