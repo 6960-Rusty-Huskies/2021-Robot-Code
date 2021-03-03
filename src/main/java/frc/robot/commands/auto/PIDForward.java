@@ -17,10 +17,10 @@ public class PIDForward extends PIDCommand {
                         Constants.DriveConstants.kTurnD),
                 drive::encoderDiff,
                 0,
-                output -> drive.tankDrive(.5 + output, .5),
+                output -> drive.arcadeDrive(-.5, output * -1),
                 drive);
         this.drive = drive;
-        //drive.zeroHeading();
+        drive.zeroHeading();
 
         // Set the controller to be continuous (because it is an angle controller)
         getController().enableContinuousInput(-180, 180);
