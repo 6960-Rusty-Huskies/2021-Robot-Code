@@ -52,6 +52,8 @@ public class DriveSystem extends SubsystemBase {
         gyro = new PigeonIMU(rightFront);
 
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+
+        SmartDashboard.putNumber("Auto P Value", Constants.DriveConstants.kTurnP);
     }
 
     public void arcadeDrive(double speed, double turn) {

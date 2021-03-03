@@ -1,6 +1,7 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.controller.*;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.*;
 import frc.robot.subsystems.drive.*;
@@ -10,7 +11,10 @@ public class PIDForward extends PIDCommand {
     private final DriveSystem drive;
 
     public PIDForward(DriveSystem drive) {
-        super(new PIDController(Constants.DriveConstants.kTurnP, Constants.DriveConstants.kTurnI, Constants.DriveConstants.kTurnD),
+        super(new PIDController(
+                        SmartDashboard.getNumber("Auto P Value", Constants.DriveConstants.kTurnP),
+                        Constants.DriveConstants.kTurnI,
+                        Constants.DriveConstants.kTurnD),
                 drive::getHeading,
                 0,
                 output -> drive.arcadeDrive(-.5, output),
