@@ -35,7 +35,7 @@ public class PIDReverse extends PIDCommand {
 
     @Override
     public boolean isFinished() {
-        return drive.getAverageEncoderDistance() <= 0;
+        return drive.getAverageEncoderDistance() <= 0.2;
     }
 
     @Override
