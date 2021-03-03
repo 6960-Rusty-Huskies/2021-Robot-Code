@@ -64,6 +64,11 @@ public class DriveSystem extends SubsystemBase {
         drive.tankDrive(leftSide, rightSide);
     }
 
+    public void stop() {
+        rightMotors.stopMotor();
+        leftMotors.stopMotor();
+    }
+
     /**
      * Resets the drive encoders to currently read a position of 0.
      */

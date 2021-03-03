@@ -41,4 +41,11 @@ public class PIDForward extends PIDCommand {
     public boolean isFinished() {
         return drive.getAverageEncoderDistance() >= 2;
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        super.end(interrupted);
+        drive.stop();
+    }
+
 }
