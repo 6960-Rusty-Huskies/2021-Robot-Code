@@ -17,7 +17,7 @@ public class ShooterSystem extends SubsystemBase {
     private final CANEncoder encoder;
     private final CANPIDController controller;
     private int velocity = 0;
-    private Map<Double, ShootingConfig> shooterValues = new HashMap<>();
+    private List<ShootingConfig> shooterValues = new ArrayList<>();
 
     public ShooterSystem() {
         shooter = new CANSparkMax(SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -30,7 +30,7 @@ public class ShooterSystem extends SubsystemBase {
         SmartDashboard.putNumber("Shooter FF Value", 0);
         shooter.setInverted(true);
         SmartDashboard.putNumber("Shooter RPM Set Value", 0);
-        shooterValues.put(7.5d, new ShootingConfig(2800, .000207));
+        shooterValues.add(new ShootingConfig(2800, .000207));
     }
 
     // Velocity in RPM
@@ -51,7 +51,7 @@ public class ShooterSystem extends SubsystemBase {
     }
 
     public ShootingConfig getShootingConfig(double distance) {
-        return shooterValues.getOrDefault(distance, null);
+        return shooterValues.get(0);
     }
 
     // Called in periodic to keep the shooter at velocity
