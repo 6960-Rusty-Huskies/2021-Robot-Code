@@ -16,7 +16,7 @@ public class PIDReverse extends PIDCommand {
                         Constants.DriveConstants.kTurnD),
                 drive::encoderDiff,
                 0,
-                output -> drive.arcadeDrive(.5, output),
+                output -> drive.arcadeDrive(.6, output),
                 drive);
         this.drive = drive;
 
@@ -24,7 +24,7 @@ public class PIDReverse extends PIDCommand {
         //getController().enableContinuousInput(-180, 180);
         // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
         // setpoint before it is considered as having reached the reference
-        getController().setTolerance(.05);
+        getController().setTolerance(.005);
     }
 
     @Override
