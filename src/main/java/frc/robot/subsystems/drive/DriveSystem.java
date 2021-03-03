@@ -111,6 +111,10 @@ public class DriveSystem extends SubsystemBase {
         odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     }
 
+    public double encoderDiff() {
+        return leftEncoder.getDistance() - rightEncoder.getDistance();
+    }
+
     /** Zeroes the heading of the robot. */
     public void zeroHeading() {
         gyro.setFusedHeading(0);

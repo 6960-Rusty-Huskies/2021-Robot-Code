@@ -15,12 +15,12 @@ public class PIDForward extends PIDCommand {
                         SmartDashboard.getNumber("Auto P Value", Constants.DriveConstants.kTurnP),
                         Constants.DriveConstants.kTurnI,
                         Constants.DriveConstants.kTurnD),
-                drive::getHeading,
-                drive::getHeading,
-                output -> drive.arcadeDrive(-.5, output * -1),
+                drive::encoderDiff,
+                0,
+                output -> drive.tankDrive(.5 + output, .5),
                 drive);
         this.drive = drive;
-        drive.zeroHeading();
+        //drive.zeroHeading();
 
         // Set the controller to be continuous (because it is an angle controller)
         getController().enableContinuousInput(-180, 180);
