@@ -1,5 +1,6 @@
 package frc.robot.subsystems.drive;
 
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.sensors.*;
 import edu.wpi.first.wpilibj.*;
@@ -31,12 +32,16 @@ public class DriveSystem extends SubsystemBase {
      */
     public DriveSystem() {
         final WPI_TalonSRX leftFront = new WPI_TalonSRX(Constants.CAN.DRIVE_LEFT_FRONT_MOTOR);
+        leftFront.setNeutralMode(NeutralMode.Brake);
         final WPI_TalonSRX leftBack = new WPI_TalonSRX(Constants.CAN.DRIVE_LEFT_BACK_MOTOR);
+        leftBack.setNeutralMode(NeutralMode.Brake);
         leftMotors = new SpeedControllerGroup(leftFront, leftBack);
         //leftMotors.setInverted(true);
 
         final WPI_TalonSRX rightFront = new WPI_TalonSRX(Constants.CAN.DRIVE_RIGHT_FRONT_MOTOR);
+        rightFront.setNeutralMode(NeutralMode.Brake);
         final WPI_TalonSRX rightBack = new WPI_TalonSRX(Constants.CAN.DRIVE_RIGHT_BACK_MOTOR);
+        rightBack.setNeutralMode(NeutralMode.Brake);
         rightMotors = new SpeedControllerGroup(rightFront, rightBack);
         //rightMotors.setInverted(true);
 
