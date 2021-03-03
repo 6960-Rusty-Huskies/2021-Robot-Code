@@ -16,7 +16,7 @@ public class PIDForward extends PIDCommand {
                         Constants.DriveConstants.kTurnI,
                         Constants.DriveConstants.kTurnD),
                 drive::getHeading,
-                0,
+                drive::getHeading,
                 output -> drive.arcadeDrive(-.5, output * -1),
                 drive);
         this.drive = drive;
@@ -33,6 +33,6 @@ public class PIDForward extends PIDCommand {
 
     @Override
     public boolean isFinished() {
-        return drive.getAverageEncoderDistance() >= 3;
+        return drive.getAverageEncoderDistance() >= 2;
     }
 }
