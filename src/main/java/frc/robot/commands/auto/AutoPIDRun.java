@@ -13,10 +13,10 @@ public class AutoPIDRun extends SequentialCommandGroup {
                 new PIDForward(driveSystem)
         );
         ballSystem.setBallCount(3);
-        addCommands(new Shoot(ballSystem, 7.5),
+        addCommands(new Shoot(ballSystem, 7.5d),
                 driveForwardAndIntake,
                 new WaitCommand(.5),
                 new PIDReverse(driveSystem),
-                new Shoot(ballSystem, 7.5));
+                new Shoot(ballSystem, 7.5d));
     }
 }

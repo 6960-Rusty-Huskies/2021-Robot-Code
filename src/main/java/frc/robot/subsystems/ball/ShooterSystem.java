@@ -27,10 +27,10 @@ public class ShooterSystem extends SubsystemBase {
         controller = shooter.getPIDController();
         controller.setP(SHOOTER_P);
         controller.setFF(SHOOTER_FF);
-        SmartDashboard.putNumber("Shooter FF Value", SHOOTER_FF);
+        SmartDashboard.putNumber("Shooter FF Value", 0);
         shooter.setInverted(true);
-        SmartDashboard.putNumber("Shooter RPM Set Value", 3650);
-        shooterValues.put(7.5D, new ShootingConfig(2800, .000207));
+        SmartDashboard.putNumber("Shooter RPM Set Value", 36500);
+        shooterValues.put(7.5d, new ShootingConfig(2800, .000207));
     }
 
     // Velocity in RPM
@@ -41,6 +41,7 @@ public class ShooterSystem extends SubsystemBase {
 
     public void setShooterFF(double ff) {
         controller.setFF(ff);
+        SmartDashboard.putNumber("Shooter FF Value", ff);
     }
 
     // Used to naturally slow the motor rather than drive it to zero with controller

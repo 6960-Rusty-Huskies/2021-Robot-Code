@@ -10,7 +10,7 @@ import static frc.robot.Constants.PID.SHOOTER_FF;
 public class Shoot extends CommandBase {
 
     protected final BallSystem ballSystem;
-    protected double distance = 0;
+    protected double distance;
 
     public Shoot(BallSystem ballSystem, double distance) {
         addRequirements(ballSystem);
