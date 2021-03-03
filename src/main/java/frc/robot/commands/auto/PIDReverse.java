@@ -11,7 +11,9 @@ public class PIDReverse extends PIDCommand {
     private final DriveSystem drive;
 
     public PIDReverse(DriveSystem drive) {
-        super(new PIDController(Constants.DriveConstants.kTurnP, Constants.DriveConstants.kTurnI, Constants.DriveConstants.kTurnD),
+        super(new PIDController(SmartDashboard.getNumber("Auto P Value", Constants.DriveConstants.kTurnP),
+                        Constants.DriveConstants.kTurnI,
+                        Constants.DriveConstants.kTurnD),
                 drive::encoderDiff,
                 0,
                 output -> drive.arcadeDrive(.5, output),
@@ -19,12 +21,10 @@ public class PIDReverse extends PIDCommand {
         this.drive = drive;
 
         // Set the controller to be continuous (because it is an angle controller)
-        getController().enableContinuousInput(-180, 180);
+        //getController().enableContinuousInput(-180, 180);
         // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
         // setpoint before it is considered as having reached the reference
-        getController().setTolerance(
-                Constants.DriveConstants.kTurnToleranceDeg,
-                Constants.DriveConstants.kTurnRateToleranceDegPerS);
+        getController().setTolerance(.05);
     }
 
     @Override

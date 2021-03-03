@@ -20,15 +20,13 @@ public class PIDForward extends PIDCommand {
                 output -> drive.arcadeDrive(-.5, output),
                 drive);
         this.drive = drive;
-        drive.zeroHeading();
+        //drive.zeroHeading();
 
         // Set the controller to be continuous (because it is an angle controller)
-        getController().enableContinuousInput(-180, 180);
+        //getController().enableContinuousInput(-180, 180);
         // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
         // setpoint before it is considered as having reached the reference
-        getController().setTolerance(
-                Constants.DriveConstants.kTurnToleranceDeg,
-                Constants.DriveConstants.kTurnRateToleranceDegPerS);
+        getController().setTolerance(.05);
     }
 
     @Override
