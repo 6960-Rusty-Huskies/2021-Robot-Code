@@ -41,6 +41,7 @@ public class RobotContainer {
         configureButtonBindings();
 
         SmartDashboard.putNumber("PDrive Value", Constants.DriveConstants.kPDriveVel);
+        SmartDashboard.putString("Auto Stage", "Auto Not Running");
     }
 
     /**
