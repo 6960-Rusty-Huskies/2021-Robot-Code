@@ -75,7 +75,7 @@ public class RobotContainer {
         JoystickButton cancelShootOneBall = new JoystickButton(rightDriverController, 5);
         cancelShootOneBall.cancelWhenPressed(shootOneBallCommand);
 
-        Command auto = new AutoRun(driveSystem, ballSystem);
+        Command auto = new AutoPIDRun(driveSystem, ballSystem);
         JoystickButton autoStart = new JoystickButton(leftDriverController, 11);
         autoStart.whenPressed(auto);
         JoystickButton autoStop = new JoystickButton(leftDriverController, 10);

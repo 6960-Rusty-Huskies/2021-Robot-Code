@@ -10,7 +10,6 @@ public class AutoPIDRun extends SequentialCommandGroup {
 
     public AutoPIDRun(DriveSystem driveSystem, BallSystem ballSystem) {
         SmartDashboard.putString("Auto Stage", "Auto Running");
-        /*
         ParallelRaceGroup driveForwardAndIntake = new ParallelRaceGroup(
                 new Intake(ballSystem),
                 new PIDForward(driveSystem)
@@ -21,8 +20,5 @@ public class AutoPIDRun extends SequentialCommandGroup {
                 new WaitCommand(.5),
                 new PIDReverse(driveSystem),
                 new Shoot(ballSystem, 7.5d));
-
-         */
-        addCommands(new PIDForward(driveSystem), new PIDReverse(driveSystem));
     }
 }
