@@ -16,7 +16,7 @@ public class PIDReverse extends PIDCommand {
                         Constants.DriveConstants.kTurnD),
                 drive::encoderDiff,
                 0,
-                output -> drive.arcadeDrive(.6, output),
+                output -> drive.arcadeDrive(.5, output),
                 drive);
         this.drive = drive;
 
