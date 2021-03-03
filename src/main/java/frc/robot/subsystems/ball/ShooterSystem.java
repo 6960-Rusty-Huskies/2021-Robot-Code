@@ -29,7 +29,7 @@ public class ShooterSystem extends SubsystemBase {
         controller.setFF(SHOOTER_FF);
         SmartDashboard.putNumber("Shooter FF Value", 0);
         shooter.setInverted(true);
-        SmartDashboard.putNumber("Shooter RPM Set Value", 36500);
+        SmartDashboard.putNumber("Shooter RPM Set Value", 0);
         shooterValues.put(7.5d, new ShootingConfig(2800, .000207));
     }
 
