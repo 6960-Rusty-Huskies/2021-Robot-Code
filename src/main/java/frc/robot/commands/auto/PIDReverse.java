@@ -1,6 +1,7 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.controller.*;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.*;
 import frc.robot.subsystems.drive.*;
@@ -11,7 +12,7 @@ public class PIDReverse extends PIDCommand {
 
     public PIDReverse(DriveSystem drive) {
         super(new PIDController(Constants.DriveConstants.kTurnP, Constants.DriveConstants.kTurnI, Constants.DriveConstants.kTurnD),
-                drive::getHeading,
+                drive::encoderDiff,
                 0,
                 output -> drive.arcadeDrive(.5, output),
                 drive);
@@ -24,6 +25,12 @@ public class PIDReverse extends PIDCommand {
         getController().setTolerance(
                 Constants.DriveConstants.kTurnToleranceDeg,
                 Constants.DriveConstants.kTurnRateToleranceDegPerS);
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        SmartDashboard.putString("Auto Stage", "Reverse");
     }
 
     @Override

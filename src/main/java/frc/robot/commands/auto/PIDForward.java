@@ -17,7 +17,7 @@ public class PIDForward extends PIDCommand {
                         Constants.DriveConstants.kTurnD),
                 drive::encoderDiff,
                 0,
-                output -> drive.arcadeDrive(-.5, output * -1),
+                output -> drive.arcadeDrive(-.5, output),
                 drive);
         this.drive = drive;
         drive.zeroHeading();
@@ -29,6 +29,12 @@ public class PIDForward extends PIDCommand {
         getController().setTolerance(
                 Constants.DriveConstants.kTurnToleranceDeg,
                 Constants.DriveConstants.kTurnRateToleranceDegPerS);
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        SmartDashboard.putString("Auto Stage", "Forward");
     }
 
     @Override
