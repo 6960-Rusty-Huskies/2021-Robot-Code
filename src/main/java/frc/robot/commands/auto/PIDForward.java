@@ -15,7 +15,7 @@ public class PIDForward extends PIDCommand {
                         SmartDashboard.getNumber("Auto P Value", Constants.DriveConstants.kTurnP),
                         Constants.DriveConstants.kTurnI,
                         Constants.DriveConstants.kTurnD),
-                drive::encoderDiff,
+                drive::getHeading,
                 0,
                 output -> drive.arcadeDrive(-.5, output),
                 drive);
