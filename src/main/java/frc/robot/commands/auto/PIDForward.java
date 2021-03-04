@@ -3,47 +3,57 @@ package frc.robot.commands.auto;
 import edu.wpi.first.wpilibj.controller.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.*;
+import edu.wpi.first.wpiutil.math.*;
 import frc.robot.subsystems.drive.*;
 
-public class PIDForward extends PIDCommand {
+public class PIDForward extends CommandBase {
 
     private final DriveSystem drive;
+    private final PIDController driveController;
+    private final PIDController headingController;
 
     public PIDForward(DriveSystem drive) {
-        super(new PIDController(
-                        SmartDashboard.getNumber("Auto P Value", Constants.DriveConstants.kTurnP),
-                        Constants.DriveConstants.kTurnI,
-                        Constants.DriveConstants.kTurnD),
-                drive::encoderDiff,
-                0,
-                output -> drive.arcadeDrive(-.5, output),
-                drive);
         this.drive = drive;
-        //drive.zeroHeading();
+        addRequirements(drive);
 
-        // Set the controller to be continuous (because it is an angle controller)
-        //getController().enableContinuousInput(-180, 180);
-        // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
-        // setpoint before it is considered as having reached the reference
-        getController().setTolerance(.005);
+        double kP = SmartDashboard.getNumber("Drive P Value", 1);
+        driveController = new PIDController(kP,0,0);
+        driveController.setTolerance(.005);
+
+        double kP_heading = SmartDashboard.getNumber("Heading P Value", 1);
+        headingController = new PIDController(kP_heading,0,0);
+        // should be 2 degrees
+        headingController.setTolerance(2);
+        headingController.enableContinuousInput(-180, 180);
     }
 
     @Override
     public void initialize() {
-        super.initialize();
+        drive.zeroHeading();
+        drive.resetEncoders();
+
+        // 3 meters forward
+        driveController.setSetpoint(3);
+        // should go straight from reset position of 0 degrees
+        headingController.setSetpoint(0);
+
         SmartDashboard.putString("Auto Stage", "Forward");
     }
 
     @Override
+    public void execute() {
+        double speed = -.5 * MathUtil.clamp(driveController.calculate(drive.getAverageEncoderDistance()), -1, 1);
+        double turn = .3 * MathUtil.clamp(headingController.calculate(drive.getHeading()), -1, 1);
+        drive.arcadeDrive(speed, turn);
+    }
+
+    @Override
     public boolean isFinished() {
-        return drive.getAverageEncoderDistance() >= 2;
+        return driveController.atSetpoint();
     }
 
     @Override
     public void end(boolean interrupted) {
-        super.end(interrupted);
         drive.stop();
     }
-
 }
