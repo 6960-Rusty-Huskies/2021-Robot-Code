@@ -51,7 +51,10 @@ public class ShooterSystem extends SubsystemBase {
     }
 
     public ShootingConfig getShootingConfig(double distance) {
-        return shooterValues.get(0);
+        //return shooterValues.get(0);
+        return new ShootingConfig(
+                (int) SmartDashboard.getNumber("Shooter RPM Set Value", 2000),
+                SmartDashboard.getNumber("Shooter FF Value", SHOOTER_FF));
     }
 
     // Called in periodic to keep the shooter at velocity
