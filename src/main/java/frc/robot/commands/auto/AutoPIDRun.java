@@ -8,17 +8,22 @@ import frc.robot.subsystems.drive.*;
 
 public class AutoPIDRun extends SequentialCommandGroup {
 
-    public AutoPIDRun(DriveSystem driveSystem, BallSystem ballSystem) {
+    public AutoPIDRun(DriveSystem driveSystem,
+                      ShooterSystem shooterSystem,
+                      IntakeSystem intakeSystem,
+                      IntakeArmSystem intakeArmSystem,
+                      IndexerSystem lowerIndexerSystem,
+                      IndexerSystem upperIndexerSystem) {
         SmartDashboard.putString("Auto Stage", "Auto Running");
         ParallelRaceGroup driveForwardAndIntake = new ParallelRaceGroup(
-                new Intake(ballSystem),
+                new Intake(intakeSystem, intakeArmSystem, lowerIndexerSystem),
                 new PIDForward(driveSystem)
         );
-        ballSystem.setBallCount(3);
-        addCommands(new Shoot(ballSystem, 7.5d),
+        SmartDashboard.putNumber("Power Cell Count", 3);
+        addCommands(new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem),
                 driveForwardAndIntake,
                 new WaitCommand(.5),
                 new PIDReverse(driveSystem),
-                new Shoot(ballSystem, 7.5d));
+                new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem));
     }
 }

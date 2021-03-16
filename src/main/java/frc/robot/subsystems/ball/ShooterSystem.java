@@ -9,6 +9,7 @@ import java.util.*;
 import static frc.robot.Constants.CAN.SHOOTER_MOTOR;
 import static frc.robot.Constants.PID.SHOOTER_FF;
 import static frc.robot.Constants.PID.SHOOTER_P;
+import static frc.robot.Constants.Physical.SHOOTER_VELOCITY_15;
 
 
 public class ShooterSystem extends SubsystemBase {
@@ -17,7 +18,6 @@ public class ShooterSystem extends SubsystemBase {
     private final CANEncoder encoder;
     private final CANPIDController controller;
     private int velocity = 0;
-    private List<ShootingConfig> shooterValues = new ArrayList<>();
 
     public ShooterSystem() {
         shooter = new CANSparkMax(SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -27,10 +27,9 @@ public class ShooterSystem extends SubsystemBase {
         controller = shooter.getPIDController();
         controller.setP(SHOOTER_P);
         controller.setFF(SHOOTER_FF);
-        SmartDashboard.putNumber("Shooter FF Value", 0);
+        SmartDashboard.putNumber("Shooter FF Value", SHOOTER_FF);
         shooter.setInverted(true);
-        SmartDashboard.putNumber("Shooter RPM Set Value", 0);
-        shooterValues.add(new ShootingConfig(2800, .000207));
+        SmartDashboard.putNumber("Shooter RPM Set Value", SHOOTER_VELOCITY_15);
     }
 
     // Velocity in RPM
@@ -48,13 +47,6 @@ public class ShooterSystem extends SubsystemBase {
     public void stopShooter() {
         velocity = 0;
         shooter.stopMotor();
-    }
-
-    public ShootingConfig getShootingConfig(double distance) {
-        //return shooterValues.get(0);
-        return new ShootingConfig(
-                (int) SmartDashboard.getNumber("Shooter RPM Set Value", 2000),
-                SmartDashboard.getNumber("Shooter FF Value", SHOOTER_FF));
     }
 
     // Called in periodic to keep the shooter at velocity

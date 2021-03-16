@@ -2,7 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.commands.auto.*;
 import frc.robot.commands.ball.*;
@@ -23,7 +23,11 @@ public class RobotContainer {
     private final Joystick leftDriverController;
     private final Joystick rightDriverController;
     private final DriveSystem driveSystem;
-    private final BallSystem ballSystem;
+    private final IndexerSystem upperIndexerSystem;
+    private final IndexerSystem lowerIndexerSystem;
+    private final IntakeSystem intakeSystem;
+    private final IntakeArmSystem intakeArmSystem;
+    private final ShooterSystem shooterSystem;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -35,7 +39,22 @@ public class RobotContainer {
         driveSystem = new DriveSystem();
         driveSystem.setDefaultCommand(new DriveTeleop(driveSystem, leftDriverController, rightDriverController));
 
-        ballSystem = new BallSystem();
+        upperIndexerSystem = new IndexerSystem(
+                Constants.CAN.INDEX_UPPER_MOTOR,
+                true,
+                Constants.Analog.INDEX_UPPER_BEAM_BREAK);
+
+        lowerIndexerSystem = new IndexerSystem(
+                Constants.CAN.INDEX_LOWER_MOTOR,
+                false,
+                Constants.Analog.INDEX_LOWER_BEAM_BREAK);
+
+        intakeSystem = new IntakeSystem();
+
+        intakeArmSystem = new IntakeArmSystem();
+//        intakeArmSystem.setDefaultCommand(new IntakeArmUp(intakeArmSystem));
+
+        shooterSystem = new ShooterSystem();
 
         // Configure the button bindings
         configureButtonBindings();
@@ -51,35 +70,51 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        Command intakeCommand = new Intake(ballSystem);
+
+        // Intake up to 3 balls and cancel button
+        Command intakeCommand = new InstantCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(.25), intakeArmSystem)
+                .withTimeout(.25)
+                .andThen(new Intake(intakeSystem, intakeArmSystem, lowerIndexerSystem));
         JoystickButton startIntake = new JoystickButton(leftDriverController, 3);
         startIntake.whenPressed(intakeCommand);
         JoystickButton cancelIntake = new JoystickButton(leftDriverController, 2);
         cancelIntake.cancelWhenPressed(intakeCommand);
 
-        Command intakeOneBallCommand = new IntakeOneBall(ballSystem);
+        // Intake a single ball and cancel button
+        Command intakeOneBallCommand = new InstantCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(.25), intakeArmSystem)
+                .withTimeout(.25)
+                .andThen(new IntakeOneBall(intakeSystem, intakeArmSystem, lowerIndexerSystem));
         JoystickButton startIntakeOneBall = new JoystickButton(leftDriverController, 4);
         startIntakeOneBall.whenPressed(intakeOneBallCommand);
         JoystickButton cancelIntakeOneBall = new JoystickButton(leftDriverController, 5);
         cancelIntakeOneBall.cancelWhenPressed(intakeOneBallCommand);
 
-        Command shootAllCommand = new Shoot(ballSystem);
+        // Shoot all balls and cancel button
+        Command shootAllCommand = new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem);
         JoystickButton shootAll = new JoystickButton(rightDriverController, 3);
         shootAll.whenPressed(shootAllCommand);
         JoystickButton cancelShootAll = new JoystickButton(rightDriverController, 2);
         cancelShootAll.cancelWhenPressed(shootAllCommand);
 
-        Command shootOneBallCommand = new ShootOneBall(ballSystem);
+        // Shoot single ball and cancel button
+        Command shootOneBallCommand = new ShootOneBall(shooterSystem, upperIndexerSystem, lowerIndexerSystem);
         JoystickButton startShootOneBall = new JoystickButton(rightDriverController, 4);
         startShootOneBall.whenPressed(shootOneBallCommand);
         JoystickButton cancelShootOneBall = new JoystickButton(rightDriverController, 5);
         cancelShootOneBall.cancelWhenPressed(shootOneBallCommand);
 
-        Command auto = new AutoPIDRun(driveSystem, ballSystem);
+        // Setup buttons for start and stop of Auto command for testing
+        Command auto = new AutoPIDRun(driveSystem, shooterSystem, intakeSystem, intakeArmSystem, lowerIndexerSystem, upperIndexerSystem);
         JoystickButton autoStart = new JoystickButton(leftDriverController, 11);
         autoStart.whenPressed(auto);
         JoystickButton autoStop = new JoystickButton(leftDriverController, 10);
         autoStop.cancelWhenPressed(auto);
+
+        // Setup buttons for moving Intake Arm up and down
+        JoystickButton intakeArmUp = new JoystickButton(rightDriverController, 11);
+        intakeArmUp.whenPressed(new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(.25), () -> intakeArmSystem.setIntakeArmMotorSpeed(0)));
+        JoystickButton intakeArmDown = new JoystickButton(rightDriverController, 10);
+        intakeArmDown.whenPressed(new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(-.25), () -> intakeArmSystem.setIntakeArmMotorSpeed(0)));
 
     }
 

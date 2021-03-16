@@ -34,9 +34,6 @@ public final class Constants {
         public static final int INDEX_UPPER_MOTOR = 11;
 
         public static final int SHOOTER_MOTOR = 15;
-
-        // IMU
-        public static final int PIGEON_IMU = 16;
     }
 
     /**
@@ -44,11 +41,13 @@ public final class Constants {
      */
     public static final class Digital {
         // ENCODERS
+        public static final int INTAKE_ARM_ENCODER_A = 0;
+        public static final int INTAKE_ARM_ENCODER_B = 1;
+        public static final int DRIVE_RIGHT_ENCODER_A = 2;
+        public static final int DRIVE_RIGHT_ENCODER_B = 3;
         public static final int DRIVE_LEFT_ENCODER_A = 4;
         public static final int DRIVE_LEFT_ENCODER_B = 5;
 
-        public static final int DRIVE_RIGHT_ENCODER_A = 2;
-        public static final int DRIVE_RIGHT_ENCODER_B = 3;
 
         // LIMIT SWITCHES
         public static final int INTAKE_ARM_LIMIT_SWITCH = 6;
@@ -96,9 +95,7 @@ public final class Constants {
      * Contains physical constants such as gear ratios and RPMs.
      */
     public static final class Physical {
-        public static final double SHOOTER_RPM_NEAR = 2000;
-        public static final double SHOOTER_RPM_FAR = 3650;
-        public static final double SHOOTER_RPM_AUTO = 2200;
+        public static final double SHOOTER_VELOCITY_15 = 2900;
     }
 
     /**
@@ -106,13 +103,10 @@ public final class Constants {
      */
     public static final class PID {
         public static final double SHOOTER_P = 0.00035;
-        public static final double SHOOTER_FF = 0.00025;
+        public static final double SHOOTER_FF = 0.000200;
 
         public static final double INDEX_P = 1;
         public static final double INDEX_FF = 0.138;
-
-        public static final double DRIVE_BASE_P = 0.01;
-        public static final double DRIVE_BASE_D = 0;
     }
 
     public static final class DriveConstants {
