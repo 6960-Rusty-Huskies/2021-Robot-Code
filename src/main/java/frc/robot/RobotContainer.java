@@ -42,17 +42,33 @@ public class RobotContainer {
         upperIndexerSystem = new IndexerSystem(
                 Constants.CAN.INDEX_UPPER_MOTOR,
                 true,
-                Constants.Analog.INDEX_UPPER_BEAM_BREAK);
+                Constants.Analog.INDEX_UPPER_BEAM_BREAK) {
+
+            @Override
+            public void periodic() {
+                // This method will be called once per scheduler run
+                SmartDashboard.putBoolean("Upper BeamBreak", isBeamBreakTriggered());
+            }
+
+        };
 
         lowerIndexerSystem = new IndexerSystem(
                 Constants.CAN.INDEX_LOWER_MOTOR,
                 false,
-                Constants.Analog.INDEX_LOWER_BEAM_BREAK);
+                Constants.Analog.INDEX_LOWER_BEAM_BREAK) {
+
+            @Override
+            public void periodic() {
+                // This method will be called once per scheduler run
+                SmartDashboard.putBoolean("Lower BeamBreak", isBeamBreakTriggered());
+            }
+
+        };
 
         intakeSystem = new IntakeSystem();
 
         intakeArmSystem = new IntakeArmSystem();
-//        intakeArmSystem.setDefaultCommand(new IntakeArmUp(intakeArmSystem));
+        intakeArmSystem.setDefaultCommand(new IntakeArmUp(intakeArmSystem));
 
         shooterSystem = new ShooterSystem();
 
@@ -61,6 +77,7 @@ public class RobotContainer {
 
         SmartDashboard.putNumber("PDrive Value", Constants.DriveConstants.kPDriveVel);
         SmartDashboard.putString("Auto Stage", "Auto Not Running");
+        SmartDashboard.putNumber("Power Cell Count", 0);
     }
 
     /**
@@ -72,7 +89,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
 
         // Intake up to 3 balls and cancel button
-        Command intakeCommand = new InstantCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(.25), intakeArmSystem)
+        Command intakeCommand = new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(.25),
+                () -> intakeArmSystem.setIntakeArmMotorSpeed(0),
+                intakeArmSystem)
                 .withTimeout(.25)
                 .andThen(new Intake(intakeSystem, intakeArmSystem, lowerIndexerSystem));
         JoystickButton startIntake = new JoystickButton(leftDriverController, 3);
@@ -112,9 +131,9 @@ public class RobotContainer {
 
         // Setup buttons for moving Intake Arm up and down
         JoystickButton intakeArmUp = new JoystickButton(rightDriverController, 11);
-        intakeArmUp.whenPressed(new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(.25), () -> intakeArmSystem.setIntakeArmMotorSpeed(0)));
+        intakeArmUp.whenHeld(new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(.25), () -> intakeArmSystem.setIntakeArmMotorSpeed(0)));
         JoystickButton intakeArmDown = new JoystickButton(rightDriverController, 10);
-        intakeArmDown.whenPressed(new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(-.25), () -> intakeArmSystem.setIntakeArmMotorSpeed(0)));
+        intakeArmDown.whenHeld(new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(-.35), () -> intakeArmSystem.setIntakeArmMotorSpeed(0)));
 
     }
 

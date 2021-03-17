@@ -2,6 +2,7 @@ package frc.robot.subsystems.ball;
 
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.utils.*;
 
@@ -12,13 +13,11 @@ public class IndexerSystem extends SubsystemBase {
 
     private final CANSparkMax motor;
     protected final BeamBreak beamBreak;
-    protected boolean lastBeamBreakStatus;
 
     public IndexerSystem(int motorId, boolean inverted, int beamBreakId) {
         motor = new CANSparkMax(motorId, MotorType.kBrushless);
         motor.setInverted(inverted);
         beamBreak = new BeamBreak(beamBreakId);
-        lastBeamBreakStatus = beamBreak.triggered();
     }
 
     public void drive(double speed) {
@@ -26,7 +25,7 @@ public class IndexerSystem extends SubsystemBase {
     }
 
     public boolean isBeamBreakTriggered() {
-        return lastBeamBreakStatus;
+        return beamBreak.triggered();
     }
 
     @Override

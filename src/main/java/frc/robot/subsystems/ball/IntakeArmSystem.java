@@ -16,11 +16,11 @@ public class IntakeArmSystem extends PIDSubsystem {
     private final Encoder armEncoder;
 
     public IntakeArmSystem() {
-        super(new PIDController(.005, 0, 0));
+        super(new PIDController(.02, 0, 0));
         getController().setTolerance(10);
 
         intakeArmMotor = new WPI_VictorSPX(Constants.CAN.INTAKE_ARM_MOTOR);
-        intakeArmMotor.setNeutralMode(NeutralMode.Brake);
+        intakeArmMotor.setNeutralMode(NeutralMode.Coast);
 
         limitSwitch = new DigitalInput(Constants.Digital.INTAKE_ARM_LIMIT_SWITCH);
 
@@ -28,6 +28,7 @@ public class IntakeArmSystem extends PIDSubsystem {
     }
 
     public void initializeSetpoint() {
+        SmartDashboard.putNumber("Intake Arm Setpoint", armEncoder.get());
         setSetpoint(armEncoder.get());
     }
 
@@ -42,12 +43,16 @@ public class IntakeArmSystem extends PIDSubsystem {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        super.periodic();
         SmartDashboard.putNumber("Intake Arm Encoder", armEncoder.get());
         SmartDashboard.putBoolean("Intake Arm LimitSwitch", isIntakeArmUp());
     }
 
     @Override
     protected void useOutput(double output, double setpoint) {
+        SmartDashboard.putNumber("Intake PID output", output);
+        SmartDashboard.putNumber("Intake PID setpoint", setpoint);
+
         intakeArmMotor.setVoltage(output);
     }
 

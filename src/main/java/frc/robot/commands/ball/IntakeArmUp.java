@@ -30,7 +30,7 @@ public class IntakeArmUp extends CommandBase {
                 intakeArmSystem.initializeSetpoint();
                 intakeArmSystem.enable();
             } else {
-                intakeArmSystem.setIntakeArmMotorSpeed(-.25);
+                intakeArmSystem.setIntakeArmMotorSpeed(-.35);
             }
         }
     }

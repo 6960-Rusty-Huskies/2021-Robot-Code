@@ -4,8 +4,6 @@ import com.revrobotics.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 
-import java.util.*;
-
 import static frc.robot.Constants.CAN.SHOOTER_MOTOR;
 import static frc.robot.Constants.PID.SHOOTER_FF;
 import static frc.robot.Constants.PID.SHOOTER_P;
@@ -18,6 +16,8 @@ public class ShooterSystem extends SubsystemBase {
     private final CANEncoder encoder;
     private final CANPIDController controller;
     private int velocity = 0;
+    public static final int MIN_READY_VELOCITY = 10;
+    public static final int MAX_READY_VELOCITY = 15;
 
     public ShooterSystem() {
         shooter = new CANSparkMax(SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -54,9 +54,14 @@ public class ShooterSystem extends SubsystemBase {
         controller.setReference(velocity, ControlType.kVelocity);
     }
 
+    public int getVelocity() {
+        return (int) encoder.getVelocity();
+    }
+
     public boolean ready() {
         double currentVelocity = encoder.getVelocity();
-        return (currentVelocity >= (velocity - 10)) && (currentVelocity < (velocity + 50));
+        return (currentVelocity >= (velocity - MIN_READY_VELOCITY))
+                && (currentVelocity < (velocity + MAX_READY_VELOCITY));
     }
 
     @Override

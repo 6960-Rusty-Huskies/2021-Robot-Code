@@ -13,6 +13,7 @@ public class Intake extends CommandBase {
     protected final IntakeArmSystem intakeArmSystem;
     protected final IndexerSystem lowerIndexerSystem;
     protected boolean lastBeamBreakStatus;
+    protected int ballCount;
 
     public Intake(IntakeSystem intakeSystem, IntakeArmSystem intakeArmSystem, IndexerSystem lowerIndexerSystem) {
         addRequirements(intakeSystem, intakeArmSystem, lowerIndexerSystem);
@@ -28,6 +29,7 @@ public class Intake extends CommandBase {
         // set the intake arm going down, will auto switch off with limit switch
         intakeSystem.setIntakeMotorSpeed(.5);
         lastBeamBreakStatus = lowerIndexerSystem.isBeamBreakTriggered();
+        ballCount = (int) SmartDashboard.getNumber("Power Cell Count", 0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -35,8 +37,8 @@ public class Intake extends CommandBase {
     public void execute() {
         boolean lowerBeamBreakTriggered = lowerIndexerSystem.isBeamBreakTriggered();
         if (lastBeamBreakStatus && !lowerBeamBreakTriggered) {
-            SmartDashboard.putNumber("Power Cell Count",
-                    SmartDashboard.getNumber("Power Cell Count", 0) + 1);
+            ballCount++;
+            SmartDashboard.putNumber("Power Cell Count", ballCount);
         }
         if (lowerBeamBreakTriggered) {
             lowerIndexerSystem.drive(.5);
@@ -45,7 +47,6 @@ public class Intake extends CommandBase {
         }
 
         lastBeamBreakStatus = lowerBeamBreakTriggered;
-        SmartDashboard.putBoolean("Lower BeamBreak", lastBeamBreakStatus);
     }
 
     // Called once the command ends or is interrupted.
@@ -53,12 +54,13 @@ public class Intake extends CommandBase {
     public void end(boolean interrupted) {
         intakeSystem.setIntakeMotorSpeed(0);
         lowerIndexerSystem.drive(0);
+        SmartDashboard.putNumber("Power Cell Count", ballCount);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return SmartDashboard.getNumber("Power Cell Count", 0) >= MAX_BALL_COUNT;
+        return ballCount >= MAX_BALL_COUNT;
     }
 
 }
