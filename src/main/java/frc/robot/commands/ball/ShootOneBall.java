@@ -1,6 +1,5 @@
 package frc.robot.commands.ball;
 
-import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.subsystems.ball.*;
 
 
@@ -15,14 +14,13 @@ public class ShootOneBall extends Shoot {
     @Override
     public void initialize() {
         super.initialize();
-        beginningBallCount = (int) SmartDashboard.getNumber("Power Cell Count", 0);
+        beginningBallCount = ballCount;
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        int currentBallCount = (int) SmartDashboard.getNumber("Power Cell Count", 0);
-        return currentBallCount <= 0 || currentBallCount < beginningBallCount;
+        return ballCount <= 0 || ballCount < beginningBallCount;
     }
 
 }

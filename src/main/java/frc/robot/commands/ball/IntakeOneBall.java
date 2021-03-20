@@ -1,6 +1,5 @@
 package frc.robot.commands.ball;
 
-import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.subsystems.ball.*;
 
 import static frc.robot.Constants.*;
@@ -17,14 +16,13 @@ public class IntakeOneBall extends Intake {
     @Override
     public void initialize() {
         super.initialize();
-        beginningBallCount = (int) SmartDashboard.getNumber("Power Cell Count", 0);
+        beginningBallCount = ballCount;
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        int currentBallCount = (int) SmartDashboard.getNumber("Power Cell Count", 0);
-        return currentBallCount >= MAX_BALL_COUNT || currentBallCount > beginningBallCount;
+        return ballCount >= MAX_BALL_COUNT || ballCount > beginningBallCount;
     }
 
 }

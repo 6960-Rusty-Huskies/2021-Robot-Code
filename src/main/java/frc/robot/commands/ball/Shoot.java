@@ -17,7 +17,7 @@ public class Shoot extends CommandBase {
 
     private int initialSetpointHitCount = 0;
     private int initialSetpoint = 0;
-    private int ballCount = 0;
+    protected int ballCount = 0;
 
     protected boolean lastBeamBreakStatus;
 
@@ -37,6 +37,7 @@ public class Shoot extends CommandBase {
         initialSetpoint = (int) SmartDashboard.getNumber("Shooter RPM Set Value", SHOOTER_VELOCITY_15);
         shooterSystem.setVelocity(initialSetpoint);
         ballCount = (int) SmartDashboard.getNumber("Power Cell Count", 0);
+        lastBeamBreakStatus = upperIndexerSystem.isBeamBreakTriggered();
     }
 
     // Called every time the scheduler runs while the command is scheduled.

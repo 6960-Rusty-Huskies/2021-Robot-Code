@@ -17,7 +17,7 @@ public class IntakeArmSystem extends PIDSubsystem {
 
     public IntakeArmSystem() {
         super(new PIDController(.02, 0, 0));
-        getController().setTolerance(10);
+        getController().setTolerance(50);
 
         intakeArmMotor = new WPI_VictorSPX(Constants.CAN.INTAKE_ARM_MOTOR);
         intakeArmMotor.setNeutralMode(NeutralMode.Coast);
