@@ -68,7 +68,7 @@ public class RobotContainer {
         intakeSystem = new IntakeSystem();
 
         intakeArmSystem = new IntakeArmSystem();
-        intakeArmSystem.setDefaultCommand(new IntakeArmUp(intakeArmSystem));
+        //intakeArmSystem.setDefaultCommand(new IntakeArmUp(intakeArmSystem));
 
         shooterSystem = new ShooterSystem();
 

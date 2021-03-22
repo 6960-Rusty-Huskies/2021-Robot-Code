@@ -16,7 +16,7 @@ public class IntakeArmSystem extends PIDSubsystem {
     private final Encoder armEncoder;
 
     public IntakeArmSystem() {
-        super(new PIDController(.02, 0, 0));
+        super(new PIDController(0, 0, 0));
         getController().setTolerance(50);
 
         intakeArmMotor = new WPI_VictorSPX(Constants.CAN.INTAKE_ARM_MOTOR);

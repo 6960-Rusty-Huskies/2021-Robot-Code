@@ -16,20 +16,22 @@ public class ShooterSystem extends SubsystemBase {
     private final CANEncoder encoder;
     private final CANPIDController controller;
     private int velocity = 0;
-    public static final int MIN_READY_VELOCITY = 10;
+    public static final int MIN_READY_VELOCITY = 15;
     public static final int MAX_READY_VELOCITY = 15;
 
     public ShooterSystem() {
         shooter = new CANSparkMax(SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         shooter.restoreFactoryDefaults();
         shooter.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        shooter.enableVoltageCompensation(12);
         encoder = shooter.getEncoder(EncoderType.kHallSensor, 42);
         controller = shooter.getPIDController();
         controller.setP(SHOOTER_P);
+        SmartDashboard.putNumber("Shooter P Value", SHOOTER_P);
         controller.setFF(SHOOTER_FF);
         SmartDashboard.putNumber("Shooter FF Value", SHOOTER_FF);
         shooter.setInverted(true);
-        SmartDashboard.putNumber("Shooter RPM Set Value", SHOOTER_VELOCITY_15);
+        SmartDashboard.putNumber("Shooter RPM Set Value", 2900);
     }
 
     // Velocity in RPM
@@ -41,6 +43,11 @@ public class ShooterSystem extends SubsystemBase {
     public void setShooterFF(double ff) {
         controller.setFF(ff);
         SmartDashboard.putNumber("Shooter FF Value", ff);
+    }
+
+    public void setShooterP(double p) {
+        controller.setP(p);
+        SmartDashboard.putNumber("Shooter P Value", p);
     }
 
     // Used to naturally slow the motor rather than drive it to zero with controller

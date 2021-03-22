@@ -36,14 +36,14 @@ public class DriveSystem extends SubsystemBase {
         final WPI_TalonSRX leftBack = new WPI_TalonSRX(Constants.CAN.DRIVE_LEFT_BACK_MOTOR);
         leftBack.setNeutralMode(NeutralMode.Brake);
         leftMotors = new SpeedControllerGroup(leftFront, leftBack);
-        //leftMotors.setInverted(true);
+        leftMotors.setInverted(true);
 
         final WPI_TalonSRX rightFront = new WPI_TalonSRX(Constants.CAN.DRIVE_RIGHT_FRONT_MOTOR);
         rightFront.setNeutralMode(NeutralMode.Brake);
         final WPI_TalonSRX rightBack = new WPI_TalonSRX(Constants.CAN.DRIVE_RIGHT_BACK_MOTOR);
         rightBack.setNeutralMode(NeutralMode.Brake);
         rightMotors = new SpeedControllerGroup(rightFront, rightBack);
-        //rightMotors.setInverted(true);
+        rightMotors.setInverted(true);
 
         leftEncoder = new Encoder(Digital.DRIVE_LEFT_ENCODER_A, Digital.DRIVE_LEFT_ENCODER_B, leftEncoderReversed);
         rightEncoder = new Encoder(Digital.DRIVE_RIGHT_ENCODER_A, Digital.DRIVE_RIGHT_ENCODER_B, rightEncoderReversed);
@@ -62,7 +62,7 @@ public class DriveSystem extends SubsystemBase {
     }
 
     public void arcadeDrive(double speed, double turn) {
-        drive.arcadeDrive(speed, turn);
+        drive.arcadeDrive(speed, turn * -1);
     }
 
     public void tankDrive(double leftSide, double rightSide) {
