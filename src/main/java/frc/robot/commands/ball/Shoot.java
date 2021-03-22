@@ -38,11 +38,13 @@ public class Shoot extends CommandBase {
         shooterSystem.setVelocity((int) SmartDashboard.getNumber("Shooter RPM Set Value", SHOOTER_VELOCITY_15));
         ballCount = (int) SmartDashboard.getNumber("Power Cell Count", 0);
         lastBeamBreakStatus = upperIndexerSystem.isBeamBreakTriggered();
+        shooterSystem.calculate();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        // Once we hit ready state 20 times in a row... we will not go back into here until a ball is shot
         if (readyStateCount < 20) {
             if (shooterSystem.ready()) {
                 readyStateCount++;
@@ -63,7 +65,6 @@ public class Shoot extends CommandBase {
             }
             lastBeamBreakStatus = upperBeamBreakTriggered;
         }
-        shooterSystem.calculate();
     }
 
     // Called once the command ends or is interrupted.
