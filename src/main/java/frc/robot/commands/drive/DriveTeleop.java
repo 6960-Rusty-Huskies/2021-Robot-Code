@@ -30,7 +30,7 @@ public class DriveTeleop extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        driveSystem.arcadeDrive(rightDriverController.getY(), leftDriverController.getX());
+        driveSystem.arcadeDrive(leftDriverController.getY(), rightDriverController.getX());
     }
 
     // Called once the command ends or is interrupted.

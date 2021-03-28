@@ -22,6 +22,7 @@ public class RobotContainer {
 
     private final Joystick leftDriverController;
     private final Joystick rightDriverController;
+    private final Joystick consoleController;
     private final DriveSystem driveSystem;
     private final IndexerSystem upperIndexerSystem;
     private final IndexerSystem lowerIndexerSystem;
@@ -35,6 +36,7 @@ public class RobotContainer {
     public RobotContainer() {
         leftDriverController = new Joystick(Constants.USB.DRIVER_JOYSTICK_LEFT);
         rightDriverController = new Joystick(Constants.USB.DRIVER_JOYSTICK_RIGHT);
+        consoleController = new Joystick(Constants.USB.OPERATOR_JOYSTICK_LEFT);
 
         driveSystem = new DriveSystem();
         driveSystem.setDefaultCommand(new DriveTeleop(driveSystem, leftDriverController, rightDriverController));
@@ -134,6 +136,28 @@ public class RobotContainer {
         intakeArmUp.whenHeld(new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(.25), () -> intakeArmSystem.setIntakeArmMotorSpeed(0)));
         JoystickButton intakeArmDown = new JoystickButton(rightDriverController, 10);
         intakeArmDown.whenHeld(new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(-.35), () -> intakeArmSystem.setIntakeArmMotorSpeed(0)));
+
+        Command shoot22Command = new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem, 3100);
+        JoystickButton shoot22 = new JoystickButton(consoleController, 1);
+        shoot22.whenPressed(shoot22Command);
+        Command shoot17Command = new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem, 2875);
+        JoystickButton shoot17 = new JoystickButton(consoleController, 2);
+        shoot17.whenPressed(shoot17Command);
+        Command shoot12Command = new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem, 2700);
+        JoystickButton shoot12 = new JoystickButton(consoleController, 3);
+        shoot12.whenPressed(shoot12Command);
+        Command shoot7Command = new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem, 2800);
+        JoystickButton shoot7 = new JoystickButton(consoleController, 4);
+        shoot7.whenPressed(shoot7Command);
+
+        JoystickButton CancelShoot22 = new JoystickButton(consoleController, 5);
+        CancelShoot22.cancelWhenPressed(shoot22Command);
+        JoystickButton CancelShoot17 = new JoystickButton(consoleController, 6);
+        CancelShoot17.cancelWhenPressed(shoot17Command);
+        JoystickButton cancelShoot12 = new JoystickButton(consoleController, 7);
+        cancelShoot12.cancelWhenPressed(shoot12Command);
+        JoystickButton cancelShoot7 = new JoystickButton(consoleController, 8);
+        cancelShoot7.cancelWhenPressed(shoot7Command);
 
     }
 

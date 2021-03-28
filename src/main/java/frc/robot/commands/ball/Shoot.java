@@ -18,6 +18,8 @@ public class Shoot extends CommandBase {
     private int readyStateCount = 0;
     protected int ballCount = 0;
 
+    private int shootVelocity;
+
     protected boolean lastBeamBreakStatus;
 
     public Shoot(ShooterSystem shooterSystem, IndexerSystem upperIndexerSystem, IndexerSystem lowerIndexerSystem) {
@@ -28,6 +30,17 @@ public class Shoot extends CommandBase {
         this.lowerIndexerSystem = lowerIndexerSystem;
     }
 
+    public Shoot(ShooterSystem shooterSystem, IndexerSystem upperIndexerSystem, IndexerSystem lowerIndexerSystem, int velocity) {
+        addRequirements(shooterSystem, upperIndexerSystem, lowerIndexerSystem);
+
+        shootVelocity = velocity;
+
+        this.shooterSystem = shooterSystem;
+        this.upperIndexerSystem = upperIndexerSystem;
+        this.lowerIndexerSystem = lowerIndexerSystem;
+    }
+
+
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
@@ -35,7 +48,12 @@ public class Shoot extends CommandBase {
         shooterSystem.setShooterFF(SmartDashboard.getNumber("Shooter FF Value", SHOOTER_FF));
         shooterSystem.setShooterP(SmartDashboard.getNumber("Shooter P Value", SHOOTER_P));
         readyStateCount = 0;
-        shooterSystem.setVelocity((int) SmartDashboard.getNumber("Shooter RPM Set Value", SHOOTER_VELOCITY_15));
+        if (shootVelocity != 0) {
+            shooterSystem.setVelocity(shootVelocity);
+            SmartDashboard.putNumber("Shooter RPM Set Value", shootVelocity);
+        } else {
+            shooterSystem.setVelocity((int) SmartDashboard.getNumber("Shooter RPM Set Value", SHOOTER_VELOCITY_15));
+        }
         ballCount = (int) SmartDashboard.getNumber("Power Cell Count", 0);
         lastBeamBreakStatus = upperIndexerSystem.isBeamBreakTriggered();
         shooterSystem.calculate();
