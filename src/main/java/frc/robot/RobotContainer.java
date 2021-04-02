@@ -137,7 +137,7 @@ public class RobotContainer {
         JoystickButton intakeArmDown = new JoystickButton(rightDriverController, 10);
         intakeArmDown.whenHeld(new StartEndCommand(() -> intakeArmSystem.setIntakeArmMotorSpeed(-.35), () -> intakeArmSystem.setIntakeArmMotorSpeed(0)));
 
-        Command shoot22Command = new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem, 3100);
+        Command shoot22Command = new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem, 3200);
         JoystickButton shoot22 = new JoystickButton(consoleController, 1);
         shoot22.whenPressed(shoot22Command);
         Command shoot17Command = new Shoot(shooterSystem, upperIndexerSystem, lowerIndexerSystem, 2875);

@@ -103,7 +103,7 @@ public final class Constants {
      */
     public static final class PID {
         public static final double SHOOTER_P = 0.00005;
-        public static final double SHOOTER_FF = 0.000179;
+        public static final double SHOOTER_FF = 0.000178;
 
         public static final double INDEX_P = 1;
         public static final double INDEX_FF = 0.138;
