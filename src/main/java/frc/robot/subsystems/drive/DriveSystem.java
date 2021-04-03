@@ -52,7 +52,7 @@ public class DriveSystem extends SubsystemBase {
         resetEncoders();
 
         drive = new DifferentialDrive(leftMotors, rightMotors);
-        drive.setDeadband(.05);
+        drive.setDeadband(.01);
 
         gyro = new PigeonIMU(rightFront);
 
