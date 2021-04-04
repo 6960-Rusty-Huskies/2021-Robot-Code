@@ -16,7 +16,7 @@ public class ShooterSystem extends SubsystemBase {
     private final CANEncoder encoder;
     private final CANPIDController controller;
     private int velocity = 0;
-    public static final int MIN_READY_VELOCITY = 5;
+    public static final int MIN_READY_VELOCITY = 15;
     public static final int MAX_READY_VELOCITY = 15;
 
     public ShooterSystem() {
